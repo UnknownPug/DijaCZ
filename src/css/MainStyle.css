@@ -14,8 +14,11 @@ body {
 }
 
 footer {
-    clear: both;
     position: relative;
+    bottom: 0;
+    width: 100%;
+    height: fit-content;
+    clear: both;
     gap: 20px;
     flex-direction: row;
     padding-left: 20px;
@@ -28,12 +31,17 @@ footer {
     font-family: 'Helvetica', sans-serif;
     font-style: normal;
     font-size: 20px;
-    width: 100%;
-    height: fit-content;
 }
 
-footer#admin-info {
-    margin-top: 17.1vh;
+footer#admin-info { /*Footer for admin page.*/
+    margin-top: 17.5vh;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+footer#my-cards { /*Footer for my cards page.*/
+    margin-top: 0.4vh;
     width: 100%;
     height: auto;
     box-sizing: border-box;
