@@ -80,23 +80,15 @@
 }
 
 .card__content{
-  left: 0;
+  left: 10px;
   padding: var(--spacing-l);
   position: absolute;
-  top: 0;
+  top: 50px;
 }
 
-.card__category{
-  color: var(--text-light);
-  font-size: 0.9rem;
-  margin-bottom: var(--spacing-s);
-  text-transform: uppercase;
-}
-
-.card__heading{
+.card__heading {
   color: var(--text-lighter);
-  font-size: 1.9rem;
+  font-size: 1.5rem;
   text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
-  line-height: 1.4;
-  word-spacing: 100vw;
+  line-height: 2;
 }

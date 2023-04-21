@@ -8,14 +8,18 @@
     }
 }
 
-/*For mobile phones*/
-@media only screen and (max-width: 480px) {
+/* For mobile phones (vertical) */
+@media only screen and (max-device-width: 480px) {
     .title {
         transform: scale(0.8);
     }
 
     .logo {
         margin-top: 3px;
+    }
+
+    .text-form-style {
+        margin-left: 0 !important;
     }
 
     .header-menu a {
@@ -27,9 +31,18 @@
         justify-content: center;
     }
 
+    .text-form-style {
+        margin-left: 0;
+    }
+
     .page-wrapper {
         display: block;
         transform: scale(0.9);
+    }
+
+    iframe {
+        transform: scale(0.9);
+        aspect-ratio: 0.7;
     }
 
     .col-1 {
@@ -50,23 +63,105 @@
         display: none;
     }
 
-    .effect-one > a {
+    .effect-one a:hover:before {
+        visibility: hidden;
+        transform: scaleX(0) !important;
+    }
+}
+
+/* Surface Duo */
+@media only screen and (max-device-width: 540px) {
+
+    .title {
+        transform: scale(0.8);
+    }
+    .page-wrapper {
         display: block;
-        margin-left: auto;
-        margin-right: auto;
+        transform: scale(0.8);
+    }
+    .effect-one a:hover:before {
+        visibility: hidden;
+        transform: scaleX(0) !important;
+    }
+}
+
+/* For tablets */
+@media only screen and (max-device-width: 1200px)  {
+
+    .text-form-style {
+        margin-left: 0 !important;
+    }
+
+    .header-menu a {
+        display: block;
+        align-items: center;
+        align-content: center;
         text-align: center;
+        justify-items: center;
+        justify-content: center;
     }
 
-    .effect-one > a:before {
-        position: absolute;
-        bottom: 0;
-        margin: 0 auto;
-        transform: none;
-        transition: none;
+    .effect-one a:hover:before {
+        visibility: hidden;
+        transform: scaleX(0) !important;
     }
 
-    .effect-one > a:hover:before {
-        transform: none;
+    iframe {
+        transform: scale(0.9);
+        aspect-ratio: 0.7;
+    }
+
+    .menu-text img {
+        display: none;
+    }
+
+    .page-wrapper {
+        display: block;
+    }
+
+    footer {
+        margin-top: 16vh;
+    }
+
+    footer#admin-info {
+        margin-top: 36vh;
+    }
+
+    footer#radio-footer {
+        margin-top: 21vh;
+    }
+}
+
+/* For mobile phones && tablets (horizontal) */
+@media only screen and (max-device-width: 1200px) and (orientation: landscape) {
+
+    .title {
+        transform: scale(0.8);
+    }
+
+    .menu-text {
+        transform: scale(0.8);
+        flex-wrap: wrap;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 50px; /* Add margin-top to align text to red line */
+    }
+
+    .menu-text img {
+        display: none;
+    }
+
+    iframe {
+        transform: scale(0.9);
+        aspect-ratio: 0.7;
+    }
+
+    .effect-one a:hover:before {
+        visibility: hidden;
+        transform: scaleX(0) !important;
     }
 }
 
@@ -196,11 +291,11 @@
 }
 
 /*-----Buttons effect -----*/
-.effect-one > a {
+.effect-one a {
     position: relative;
 }
 
-.effect-one > a:before {
+.effect-one a:before {
     content: "";
     position: absolute;
     width: 100%;
@@ -213,7 +308,7 @@
     transition: all 0.4s ease-in-out 0s;
 }
 
-.effect-one > a:hover:before {
+.effect-one a:hover:before {
     visibility: visible;
     transform: scaleX(1);
 }

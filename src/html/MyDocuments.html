@@ -30,10 +30,37 @@
         <div class="card-grid">
             <div class="card">
                 <div class="card__background"></div>
-                <div class="card__content">
-                    <p class="card__category">Category</p>
-                    <h3 class="card__heading">Example Card Heading</h3>
-                </div>
+                <form id="form-r">
+                    <div class="card__content">
+                        <div class="row">
+                        <label class="card__heading" for="category">Category:</label>
+                            <select id="category" name="Choose document type" autofocus>
+                                <option value="1">Passport</option>
+                                <option value="2">Visa</option>
+                                <option value="3">ISIC</option>
+                                <option value="4">CTU ID card</option>
+                                <option value="5">Travel card</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="card__heading" for="doc-num">Doc number:</label>
+                            <input id="doc-num" type="text" placeholder="Example: #FWS1212">
+                        </div>
+                        <div class="row">
+                            <label class="card__heading" for="doc-exp">Doc expiration:</label>
+                            <input id="doc-exp" type="date" min="1952-01-01" max="2023-01-01">
+                        </div>
+                        <div class="row">
+                            <label class="card__heading" for="doc-img">Doc image:</label>
+                            <input id="doc-img" type="file"><br>
+                        </div>
+                        <div class="row">
+                            <button class="card__button" type="submit">Add</button>
+                            <button class="card__button" type="reset">Reset</button>
+                            <button class="card__button" type="button">Delete</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="card">
                 <div class="card__background"></div>
