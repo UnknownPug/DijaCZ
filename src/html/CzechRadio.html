@@ -8,6 +8,8 @@
     <link rel="icon" type="image/x-icon" href="../../public/images/LogoCTU.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="../../public/images/LogoCTU.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.3.1/css/all.css'>
+    <link rel="stylesheet" href="../css/AudioStyle.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="page-color">
@@ -26,18 +28,66 @@
 </div>
 <div class="page-wrapper">
     <div class="menu-text">
-        <p>
+        <p id="radio-text">
             Czech Radio IRozhlas broadcasts live for you 24/7
         </p>
     </div>
 </div>
-<div class="page-wrapper">
-    <iframe width="1000" height="500" src="https://www.youtube.com/embed/le2ptUE6O5s"></iframe>
+
+<div id="app-cover">
+    <div id="player">
+        <div id="player-track">
+            <div id="album-name"></div>
+            <div id="track-name"></div>
+            <div id="track-time"></div>
+            <div id="s-area">
+                <div id="ins-time"></div>
+                <div id="s-hover"></div>
+                <div id="seek-bar"></div>
+            </div>
+        </div>
+        <div id="player-content">
+            <div id="album-art">
+                <img src="../../public/images/radio/cro1.png" class="active" id="_1" alt="Radio">
+                <img src="../../public/images/radio/cro2.png" id="_2" alt="Two">
+                <img src="../../public/images/radio/cro3.png" id="_3" alt="Vltava">
+                <img src="../../public/images/radio/cro7.png" id="_4" alt="International">
+                <img src="../../public/images/radio/croddur.png" id="_5" alt="Ddur">
+                <img src="../../public/images/radio/crojazz.png" id="_6" alt="Jazz">
+                <img src="../../public/images/radio/crojuniormaxi.png" id="_7" alt="Junior">
+                <img src="../../public/images/radio/croplus.png" id="_8" alt="Plus">
+                <img src="../../public/images/radio/cropohoda.png" id="_9" alt="Weather">
+                <img src="../../public/images/radio/croregina.png" id="_10" alt="Dab">
+                <img src="../../public/images/radio/crosport.png" id="_11" alt="Sport">
+                <img src="../../public/images/radio/crowave.png" id="_12" alt="Wave">
+            </div>
+            <div id="player-controls">
+                <div class="control">
+                    <div class="button" id="play-previous">
+                        <i class="fas fa-backward"></i>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="button" id="play-pause-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="button" id="play-next">
+                        <i class="fas fa-forward"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<footer id="radio-footer">
+<footer id="app-footer">
     <p>&copy; Dija.cz 2023</p>
     <a href="https://www.instagram.com/sitfelcvut/?hl=cs" class="fa fa-instagram"></a>
     <a href="https://sit.fel.cvut.cz">&lt;SIT/&gt;</a>
 </footer>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src="../js/AudioScript.js"></script>
 </body>
 </html>

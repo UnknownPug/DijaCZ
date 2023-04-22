@@ -47,6 +47,11 @@ footer#my-cards { /*Footer for my cards page.*/
     box-sizing: border-box;
 }
 
+footer#radio-footer {
+    position: relative;
+    z-index: 3;
+}
+
 a, a:visited { /*Making footer links be not seen as clicked.*/
     color: white;
     text-decoration: none;
