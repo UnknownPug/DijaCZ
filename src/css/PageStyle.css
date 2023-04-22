@@ -188,11 +188,6 @@
         display: none;
     }
 
-    iframe {
-        transform: scale(0.9);
-        aspect-ratio: 0.7;
-    }
-
     .effect-one a:hover:before {
         visibility: hidden;
         transform: scaleX(0) !important;

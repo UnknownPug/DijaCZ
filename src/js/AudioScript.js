@@ -10,8 +10,6 @@ $(function () {
         sHover = $("#s-hover"),
         playPauseButton = $("#play-pause-button"),
         i = playPauseButton.find("i"),
-        tProgress = $("#current-time"),
-        tTime = $("#track-length"),
         nTime = 0,
         buffInterval = null,
         tFlag = false,
@@ -125,31 +123,6 @@ $(function () {
         let durSeconds = Math.floor(audio.duration - durMinutes * 60);
 
         let playProgress = (audio.currentTime / audio.duration) * 100;
-
-        if (curMinutes < 10) {
-            curMinutes = "0" + curMinutes;
-        }
-        if (curSeconds < 10) {
-            curSeconds = "0" + curSeconds;
-        }
-
-        if (durMinutes < 10) {
-            durMinutes = "0" + durMinutes;
-        }
-        if (durSeconds < 10) {
-            durSeconds = "0" + durSeconds;
-        }
-
-        if (isNaN(curMinutes) || isNaN(curSeconds)) {
-            tProgress.text("00:00");
-        } else {
-            tProgress.text(curMinutes + ":" + curSeconds);
-        }
-        if (isNaN(durMinutes) || isNaN(durSeconds)) {
-            tTime.text("00:00");
-        } else {
-            tTime.text(durMinutes + ":" + durSeconds);
-        }
         if (isNaN(curMinutes) || isNaN(curSeconds) || isNaN(durMinutes) || isNaN(durSeconds)) {
             trackTime.removeClass("active");
         } else {
@@ -159,7 +132,6 @@ $(function () {
         if (playProgress === 100) {
             i.attr("class", "fa fa-play");
             seekBar.width(0);
-            tProgress.text("00:00");
             albumArt.removeClass("buffering").removeClass("active");
             clearInterval(buffInterval);
         }
@@ -167,12 +139,6 @@ $(function () {
 
     function checkBuffering() {
         clearInterval(buffInterval);
-        buffInterval = setInterval(function () {
-            if (nTime === 0 || bTime - nTime > 1000) {
-                albumArt.addClass("buffering");
-            }
-            else albumArt.removeClass("buffering");
-        }, 100);
     }
 
     function selectTrack(flag) {
@@ -188,10 +154,6 @@ $(function () {
                 albumArt.removeClass("buffering");
                 i.attr("class", "fa fa-pause");
             }
-            trackTime.removeClass("active");
-            tProgress.text("00:00");
-            tTime.text("00:00");
-
             currAlbum = albums[currIndex];
             currTrackName = trackNames[currIndex];
             currArtwork = albumArtworks[currIndex];
