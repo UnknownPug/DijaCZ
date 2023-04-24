@@ -8,14 +8,10 @@
     }
 }
 
-/* For mobile phones (vertical) */
+ /* For mobile phones (vertical) */
 @media only screen and (max-device-width: 480px) {
     .title {
         transform: scale(0.8);
-    }
-
-    #player-content {
-        margin-top: 200px !important;
     }
 
     .logo {
@@ -101,15 +97,6 @@
         margin: 0 auto;
         position: relative;
         transform: translateY(50px) translateX(-12px) scale(0.7) !important;
-    }
-}
-
-/* iPhone XR */
-@media only screen and (max-device-width: 414px) {
-    #app-cover {
-        margin: 0 auto;
-        position: relative;
-        transform: scale(0.7) translateY(-120px) translateX(-28px) !important;
     }
 }
 

@@ -2,15 +2,18 @@
 
 #app-cover {
     position: absolute;
-    top: 50%;
+    top: 60vh;
     right: 0;
     left: 0;
     width: 430px;
     height: 100px;
-    margin: -4px auto;
-    z-index: 2;
+    margin: 0 auto;
+    z-index: 4;
     transform: scale(0.9);
+
+    /*transform: translateY(5px) translateX(-73px) scale(0.5) !important;*/
 }
+
 
 #player {
     position: relative;
