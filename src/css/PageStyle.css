@@ -1,15 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 
-/* For desktop: */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) { /* For desktop: */
     .col-1 {
         display: inline-block;
         transform: scale(0.9);
     }
 }
 
- /* For mobile phones (vertical) */
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 480px) { /* For mobile phones (vertical) */
     .title {
         transform: scale(0.8);
     }
@@ -63,10 +61,45 @@
         visibility: hidden;
         transform: scaleX(0) !important;
     }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
+    }
 }
 
-/* Surface Duo */
-@media only screen and (max-device-width: 540px) {
+@media only screen and (max-device-width: 540px) { /* For mobile phones (vertical) */
 
     .title {
         transform: scale(0.8);
@@ -85,10 +118,45 @@
     #radio-text {
         display: none;
     }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
+    }
 }
 
-/* Nest Hub */
-@media only screen and (max-device-width: 1024px) {
+@media only screen and (max-device-width: 1024px) { /* Nest Hub */
     #radio-text {
         display: none;
     }
@@ -98,19 +166,89 @@
         position: relative;
         transform: translateY(50px) translateX(-12px) scale(0.7) !important;
     }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
+    }
 }
 
-/* Galaxy Fold */
-@media only screen and (max-device-width: 280px) {
+@media only screen and (max-device-width: 280px) { /* Nest Hub */
     #app-cover {
         margin: 0 auto;
         position: relative;
         transform: translateY(5px) translateX(-73px) scale(0.5) !important;
     }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
+    }
 }
 
-/* For tablets */
-@media only screen and (max-device-width: 1200px) {
+@media only screen and (max-device-width: 1200px) { /* For tablets */
 
     .text-form-style {
         margin-left: 0 !important;
@@ -151,6 +289,42 @@
     footer#admin-info {
         margin-top: 36vh;
     }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
+    }
 }
 
 /* For mobile phones && tablets (horizontal) */
@@ -178,6 +352,42 @@
     .effect-one a:hover:before {
         visibility: hidden;
         transform: scaleX(0) !important;
+    }
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    /* Apply margin-bottom to all buttons except the last one */
+    .button:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .button.green {
+        background-color: #0b8c0b;
+        color: #f0f0f0;
+    }
+
+    .button.red {
+        background-color: #B71212;
+        color: #f0f0f0;
+    }
+
+    .button.blue {
+        background-color: #fffb00;
+        color: #e10707;
     }
 }
 
@@ -299,6 +509,68 @@
     bottom: 0;
     width: 100%;
     z-index: 4;
+}
+
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.placeholder {
+    color: black;
+}
+
+/* Optional styling */
+.custom-file-input {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.card__heading {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/*---- Buttons container ----*/
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button {
+    margin: 0 10px;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.button.green {
+    background-color: #0b8c0b;
+    color: #f0f0f0;
+}
+
+.button.red {
+    background-color: #B71212;
+    color: #f0f0f0;
+}
+
+.button.blue {
+    background-color: #fffb00;
+    color: #e10707;
 }
 
 /*-----Buttons effect -----*/

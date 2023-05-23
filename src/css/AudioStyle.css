@@ -1,5 +1,69 @@
 @import url(https://use.fontawesome.com/releases/v5.3.1/css/all.css);
 
+@media only screen and (device-width: 375px) { /* iPhone 12 Pro display */
+    #player-content {
+        right: 20px;
+    }
+
+    #player-track.active {
+        right: 43px;
+        left: 4px;
+    }
+
+    div#player-track {
+        right: 43px;
+        left: 4px;
+    }
+}
+
+@media only screen and (device-width: 390px) { /* iPhone 12 Pro display */
+    #player-content {
+        right: 10px;
+    }
+
+    #player-track.active {
+        right: 32px;
+        left: 8px;
+    }
+
+    div#player-track {
+        right: 32px;
+        left: 8px;
+    }
+}
+
+@media only screen and (device-width: 393px) { /* Pixel 5 display */
+    #player-content {
+        right: 10px;
+    }
+
+    #player-track.active {
+        right: 32px;
+        left: 8px;
+    }
+
+    div#player-track {
+        right: 32px;
+        left: 8px;
+    }
+}
+
+@media only screen and (device-width: 360px) { /* Samsung Galaxy S8+ display */
+    #player-content {
+        right: 30px;
+    }
+
+    #player-track.active {
+        right: 52px;
+        left: -7px;
+    }
+
+    div#player-track {
+        right: 52px;
+        left: -7px;
+    }
+}
+
 #app-cover {
     position: absolute;
     top: 60vh;
@@ -10,10 +74,7 @@
     margin: 0 auto;
     z-index: 4;
     transform: scale(0.9);
-
-    /*transform: translateY(5px) translateX(-73px) scale(0.5) !important;*/
 }
-
 
 #player {
     position: relative;

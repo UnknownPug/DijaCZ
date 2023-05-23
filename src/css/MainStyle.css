@@ -1,3 +1,27 @@
+@media only screen and (device-width: 280px) { /* Galaxy Fold */
+    label.btn span {
+        font-size: 1em;
+    }
+
+    label i.fa.fa-square-o,
+    label i.fa.fa-check-square-o {
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (device-width: 1024px) { /* Nest Hub */
+    label.card__heading {
+        font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
 body {
     position: absolute;
     overflow-y: scroll;
@@ -60,6 +84,78 @@ a, a:visited { /*Making footer links be not seen as clicked.*/
 iframe {
     display: block;
     margin: 0 auto;
-    border: 20px solid  rgb(245, 207, 135);
+    border: 20px solid rgb(245, 207, 135);
     border-radius: 20px;
+}
+
+/* ---- Checkbox ---- */
+input[type="checkbox"] {
+    display: none;
+}
+
+label input[type="radio"] ~ i.fa.fa-dot-circle-o {
+    display: none;
+}
+
+label input[type="radio"]:checked ~ i.fa.fa-circle-o {
+    display: none;
+}
+
+label.btn span {
+    font-size: 1.5em;
+}
+
+label input[type="checkbox"] ~ i.fa.fa-square-o {
+    color: #c8c8c8;
+    display: inline;
+}
+
+label input[type="checkbox"] ~ i.fa.fa-check-square-o {
+    display: none;
+}
+
+label input[type="checkbox"]:checked ~ i.fa.fa-square-o {
+    display: none;
+}
+
+label input[type="checkbox"]:checked ~ i.fa.fa-check-square-o {
+    color: #c42222;
+    display: inline;
+}
+
+label:hover input[type="checkbox"] ~ i.fa {
+    color: #c42222;
+}
+
+div[data-toggle="buttons"] label.active {
+    color: #c42222;
+}
+
+div[data-toggle="buttons"] label {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 2em;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: top;
+    cursor: pointer;
+    border: 0 solid #c8c8c8;
+    border-radius: 3px;
+    color: #c8c8c8;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+div[data-toggle="buttons"] label:hover {
+    color: #c42222;
+}
+
+div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }

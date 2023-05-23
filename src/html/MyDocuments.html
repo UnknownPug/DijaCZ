@@ -9,7 +9,10 @@
     <link rel="icon" type="image/x-icon" href="../../public/images/LogoCTU.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="../../public/images/LogoCTU.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../js/MyDocument.js"></script>
 </head>
 <body class="page-color">
 <div class="header-menu">
@@ -26,6 +29,13 @@
     </header>
 </div>
 <div>
+    <!-- Buttons container -->
+    <div class="buttons-container">
+        <button class="button green">Add new Document</button>
+        <button class="button red">Delete Document</button>
+        <button class="button blue">Delete all documents selected</button>
+    </div>
+    <!-- Cards container -->
     <section class="hero-section">
         <div class="card-grid">
             <div class="card">
@@ -33,31 +43,42 @@
                 <form id="form-r">
                     <div class="card__content">
                         <div class="row">
-                        <label class="card__heading" for="category">Category:</label>
-                            <select id="category" name="Choose document type" autofocus>
-                                <option value="1">Passport</option>
-                                <option value="2">Visa</option>
-                                <option value="3">ISIC</option>
-                                <option value="4">CTU ID card</option>
-                                <option value="5">Travel card</option>
-                            </select>
-                        </div>
-                        <div class="row">
-                            <label class="card__heading" for="doc-num">Doc number:</label>
-                            <input id="doc-num" type="text" placeholder="Example: #FWS1212">
-                        </div>
-                        <div class="row">
-                            <label class="card__heading" for="doc-exp">Doc expiration:</label>
-                            <input id="doc-exp" type="date" min="1952-01-01" max="2023-01-01">
-                        </div>
-                        <div class="row">
-                            <label class="card__heading" for="doc-img">Doc image:</label>
-                            <input id="doc-img" type="file"><br>
-                        </div>
-                        <div class="row">
-                            <button class="card__button" type="submit">Add</button>
-                            <button class="card__button" type="reset">Reset</button>
-                            <button class="card__button" type="button">Delete</button>
+                            <div class="custom-div">
+                                <label class="card__heading" for="category">Category:</label>
+                                <select id="category" name="document-type" autofocus>
+                                    <option value="1">Passport</option>
+                                    <option value="2">Visa</option>
+                                    <option value="3">ISIC</option>
+                                    <option value="4">CTU ID card</option>
+                                    <option value="5">Travel card</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <label class="card__heading" for="doc-num">Doc number:</label>
+                                <input id="doc-num" type="text" placeholder="Example: #FWS1212">
+                            </div>
+                            <div class="row">
+                                <label class="card__heading" for="doc-exp">Doc expiration:</label>
+                                <input id="doc-exp" type="date" min="1952-01-01" max="2023-01-01">
+                            </div>
+                            <div class="row">
+                                <label class="card__heading" for="doc-img">Doc image:</label>
+                                <div class="custom-file-input">
+                                    <input type="file" id="doc-img" class="file-input"
+                                           onchange="updatePlaceholder(this)">
+                                    <span id="placeholder" class="placeholder">No file chosen</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group btn-group" data-toggle="buttons">
+                                    <label class="btn">
+                                        <span> Select to Delete </span>
+                                        <input type="checkbox" name='delete-button'>
+                                        <i class="fa fa-square-o fa-2x"></i>
+                                        <i class="fa fa-check-square-o fa-2x"></i>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
