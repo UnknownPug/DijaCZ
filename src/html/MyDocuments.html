@@ -9,10 +9,10 @@
     <link rel="icon" type="image/x-icon" href="../../public/images/LogoCTU.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="../../public/images/LogoCTU.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../js/MyDocument.js"></script>
+    <script src="../js/ControllerDocument.js"></script>
 </head>
 <body class="page-color">
 <div class="header-menu">
@@ -31,14 +31,14 @@
 <div>
     <!-- Buttons container -->
     <div class="buttons-container">
-        <button class="button green">Add new Document</button>
-        <button class="button red">Delete Document</button>
-        <button class="button blue">Delete all documents selected</button>
+        <button class="button green" id="add-doc">Add new Document</button>
+        <button class="button red" id="delete-selected">Delete Document</button>
+        <button class="button yellow" id="delete-all">Delete all documents selected</button>
     </div>
     <!-- Cards container -->
     <section class="hero-section">
         <div class="card-grid">
-            <div class="card">
+            <div class="card" data-card-id="0">
                 <div class="card__background"></div>
                 <form id="form-r">
                     <div class="card__content">
@@ -82,27 +82,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="card">
-                <div class="card__background"></div>
-                <div class="card__content">
-                    <p class="card__category">Category</p>
-                    <h3 class="card__heading">Example Card Heading</h3>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__background"></div>
-                <div class="card__content">
-                    <p class="card__category">Category</p>
-                    <h3 class="card__heading">Example Card Heading</h3>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__background"></div>
-                <div class="card__content">
-                    <p class="card__category">Category</p>
-                    <h3 class="card__heading">Example Card Heading</h3>
-                </div>
             </div>
         </div>
     </section>
