@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
     addButton.addEventListener('click', addNewDocument);
 
     // Add click event listener to the "Delete Document" button
-    deleteAllButton.addEventListener('click', deleteSelectedDocuments);
+    deleteSelectedButton.addEventListener('click', deleteSelectedDocuments);
 
     // Add click event listener to the "Delete all documents selected" button
-    deleteSelectedButton.addEventListener('click', deleteAllSelectedDocuments);
+    deleteAllButton.addEventListener('click', deleteAllSelectedDocuments);
 
     // Add a delegated event listener for the file input change event
-    document.addEventListener('change', function(event) {
+    document.addEventListener('change', function (event) {
         const target = event.target;
         if (target && target.matches('.file-input')) {
             const card = target.closest('.card');
@@ -28,6 +28,48 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+// Function to delete selected documents
+    function deleteSelectedDocuments() {
+        // Get all the checkboxes for document deletion
+        const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
+        if (checkboxes.length === 1) {
+            // Show confirmation dialog
+            const confirmDelete = confirm("Are you sure you want to delete the selected documents?");
+            if (confirmDelete) {
+                // Remove the parent card of each selected checkbox
+                checkboxes.forEach((checkbox) => {
+                    const card = checkbox.closest('.card');
+                    card.remove();
+                });
+            }
+        } else {
+            // Add a disabled class to visually disable the button
+            alert("You can only delete one document.");
+            deleteSelectedButton.classList.add('disabled');
+        }
+    }
+
+    // Function to delete all selected documents
+    function deleteAllSelectedDocuments() {
+        // Get all the checkboxes for document deletion
+        const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
+        if (checkboxes.length > 1) {
+            // Show confirmation dialog
+            const confirmDelete = confirm("Are you sure you want to delete all selected documents?");
+            if (confirmDelete) {
+                // Remove the parent card of each selected checkbox
+                checkboxes.forEach((checkbox) => {
+                    const card = checkbox.closest('.card');
+                    card.remove();
+                });
+            }
+        } else {
+            // Add a disabled class to visually disable the button
+            alert("You can delete several selected documents.");
+            deleteAllButton.classList.add('disabled');
+        }
+    }
 });
 
 // Function to add a new document
@@ -62,30 +104,6 @@ function addNewDocument() {
     // Add the cloned card to the card-grid container
     const cardGrid = document.querySelector('.card-grid');
     cardGrid.appendChild(cardClone);
-}
-
-// Function to delete selected documents
-function deleteSelectedDocuments() {
-    // Get all the checkboxes for document deletion
-    const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
-
-    // Remove the parent card of each selected checkbox
-    checkboxes.forEach((checkbox) => {
-        const card = checkbox.closest('.card');
-        card.remove();
-    });
-}
-
-// Function to delete all selected documents
-function deleteAllSelectedDocuments() {
-    // Get all the checkboxes for document deletion
-    const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
-
-    // Remove the parent card of each selected checkbox
-    checkboxes.forEach((checkbox) => {
-        const card = checkbox.closest('.card');
-        card.remove();
-    });
 }
 
 // Function to update the image placeholder for a specific card
