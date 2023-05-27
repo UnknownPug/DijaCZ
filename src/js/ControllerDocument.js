@@ -4,16 +4,56 @@ const MyApp = {};
 // Document module
 MyApp.DocumentModule = (function () {
 
-    // Function to update the image placeholder for a specific card
+    // Function to update the file placeholder for a specific card
     function updatePlaceholder(event) {
         const fileInput = event.target;
         const card = fileInput.closest('.card');
         const placeholder = card.querySelector('.placeholder');
+
         if (fileInput.files && fileInput.files[0]) {
-            placeholder.textContent = fileInput.files[0].name;
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+                // Display the file name and show the image preview
+                placeholder.textContent = file.name;
+            });
+
+            // Read the file as data URL
+            reader.readAsDataURL(file);
         } else {
             placeholder.textContent = 'No file chosen';
         }
+    }
+
+    // Function to save card data to LocalStorage
+    function saveCardData(card) {
+        const cardId = card.dataset.cardId;
+        const inputs = card.querySelectorAll('input, select');
+        const cardData = {};
+        inputs.forEach((input) => {
+            cardData[input.id] = input.value;
+        });
+        localStorage.setItem(`card-${cardId}`, JSON.stringify(cardData));
+    }
+
+    // Function to load card data from LocalStorage
+    function loadCardData(card) {
+        const cardId = card.dataset.cardId;
+        const cardData = localStorage.getItem(`card-${cardId}`);
+        if (cardData) {
+            const inputs = card.querySelectorAll('input, select');
+            const parsedData = JSON.parse(cardData);
+            inputs.forEach((input) => {
+                input.value = parsedData[input.id] || '';
+            });
+        }
+    }
+
+    // Function to delete card data from LocalStorage
+    function deleteCardData(card) {
+        const cardId = card.dataset.cardId;
+        localStorage.removeItem(`card-${cardId}`);
     }
 
     // Public methods
@@ -29,6 +69,7 @@ MyApp.DocumentModule = (function () {
                     // Remove the parent card of each selected checkbox
                     checkboxes.forEach((checkbox) => {
                         const card = checkbox.closest('.card');
+                        deleteCardData(card); // Delete card data from LocalStorage
                         card.remove();
                     });
                 }
@@ -50,6 +91,7 @@ MyApp.DocumentModule = (function () {
                     // Remove the parent card of each selected checkbox
                     checkboxes.forEach((checkbox) => {
                         const card = checkbox.closest('.card');
+                        deleteCardData(card); // Delete card data from LocalStorage
                         card.remove();
                     });
                 }
@@ -93,8 +135,17 @@ MyApp.DocumentModule = (function () {
             const cardGrid = document.querySelector('.card-grid');
             cardGrid.appendChild(cardClone);
 
-            // Add event listener for file input change event to the cloned card
+            // Save card data to LocalStorage
+            saveCardData(cardClone);
+
+            // Add event listeners for file input change event and card data saving/loading
             fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
+            cardClone.addEventListener('change', function (event) {
+                saveCardData(event.target.closest('.card'));
+            });
+            cardClone.addEventListener('DOMContentLoaded', function (event) {
+                loadCardData(event.target.closest('.card'));
+            });
         },
 
         updatePlaceholder: updatePlaceholder,
@@ -135,4 +186,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('doc-img');
 
     fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
+
+    // Drag and Drop functionality
+    const cardGrid = document.querySelector('.card-grid');
+
+    cardGrid.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', event.target.dataset.cardId);
+    });
+
+    cardGrid.addEventListener('dragover', function (event) {
+        event.preventDefault();
+    });
+
+    cardGrid.addEventListener('drop', function (event) {
+        event.preventDefault();
+        const cardId = event.dataTransfer.getData('text/plain');
+        const card = document.querySelector(`[data-card-id="${cardId}"]`);
+        const targetCard = event.target.closest('.card');
+        if (targetCard) {
+            cardGrid.insertBefore(card, targetCard);
+        } else {
+            cardGrid.appendChild(card);
+        }
+    });
 });
