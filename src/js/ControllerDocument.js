@@ -310,11 +310,13 @@ MyApp.DocumentModule = (function () {
             cardGrid.appendChild(cardClone);
         },
         // Function to validate document fields
-        updatePlaceholder: updatePlaceholder
+        updatePlaceholder: updatePlaceholder,
+        // Expose the init function as a public method
+        init: this.init,
     };
 })();
 
-// Button module
+    // Button module
     MyApp.ButtonModule = (function () {
         // Private variables and functions
 
@@ -328,7 +330,7 @@ MyApp.DocumentModule = (function () {
         };
     })();
 
-// Wrap the JavaScript code in an event listener
+    // Wrap the JavaScript code in an event listener
     document.addEventListener('DOMContentLoaded', function () {
         // Get references to the buttons
         const addButton = document.getElementById('add-doc');
@@ -371,7 +373,4 @@ MyApp.DocumentModule = (function () {
                 cardGrid.appendChild(card);
             }
         });
-
-        // Initialize the application
-        MyApp.DocumentModule.init();
     });
