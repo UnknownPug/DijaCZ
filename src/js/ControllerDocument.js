@@ -56,12 +56,29 @@ MyApp.DocumentModule = (function () {
         localStorage.removeItem(`card-${cardId}`);
     }
 
+    // Function to delete a card and update the URL
+    function deleteCardAndUpdateURL(card, remainingDocuments) {
+        deleteCardData(card); // Delete card data from LocalStorage
+        card.remove();
+
+        // Update the URL with the new card count using the History API
+        const state = {cardCount: remainingDocuments - 1};
+        const url = `?cardCount=${remainingDocuments - 1}`;
+        history.pushState(state, '', url);
+    }
     // Public methods
     return {
         // Function to delete selected documents
         deleteSelectedDocuments: function () {
             // Get all the checkboxes for document deletion
             const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
+            const remainingDocuments = document.querySelectorAll('.card').length;
+
+            if (remainingDocuments <= 1) {
+                alert('You must have at least one document remaining.');
+                return;
+            }
+
             if (checkboxes.length === 1) {
                 // Show confirmation dialog
                 const confirmDelete = confirm('Are you sure you want to delete the selected document?');
@@ -69,8 +86,7 @@ MyApp.DocumentModule = (function () {
                     // Remove the parent card of each selected checkbox
                     checkboxes.forEach((checkbox) => {
                         const card = checkbox.closest('.card');
-                        deleteCardData(card); // Delete card data from LocalStorage
-                        card.remove();
+                        deleteCardAndUpdateURL(card, remainingDocuments);
                     });
                 }
             } else {
@@ -84,21 +100,23 @@ MyApp.DocumentModule = (function () {
         deleteAllSelectedDocuments: function () {
             // Get all the checkboxes for document deletion
             const checkboxes = document.querySelectorAll('input[name="delete-button"]:checked');
-            if (checkboxes.length > 1) {
-                // Show confirmation dialog
-                const confirmDelete = confirm('Are you sure you want to delete all selected documents?');
-                if (confirmDelete) {
-                    // Remove the parent card of each selected checkbox
-                    checkboxes.forEach((checkbox) => {
-                        const card = checkbox.closest('.card');
-                        deleteCardData(card); // Delete card data from LocalStorage
-                        card.remove();
-                    });
-                }
-            } else {
-                // Add a disabled class to visually disable the button
-                alert('You can delete several selected documents.');
-                MyApp.ButtonModule.disableButton('delete-all');
+            const totalDocuments = document.querySelectorAll('.card').length;
+            const selectedDocuments = checkboxes.length;
+            const remainingDocuments = totalDocuments - selectedDocuments;
+
+            if (remainingDocuments < 1) {
+                alert('You must have at least one document remaining.');
+                return;
+            }
+
+            // Show confirmation dialog
+            const confirmDelete = confirm('Are you sure you want to delete all selected documents?');
+            if (confirmDelete) {
+                // Remove the parent card of each selected checkbox
+                checkboxes.forEach((checkbox) => {
+                    const card = checkbox.closest('.card');
+                    deleteCardAndUpdateURL(card, remainingDocuments);
+                });
             }
         },
 
@@ -106,6 +124,13 @@ MyApp.DocumentModule = (function () {
         addNewDocument: function () {
             // Clone the card element
             const cardClone = document.querySelector('.card').cloneNode(true);
+
+            // Get the total number of existing cards
+            const cards = document.querySelectorAll('.card');
+            const cardId = String(cards.length + 1);
+
+            // Update the dataset attribute with the new card ID
+            cardClone.dataset.cardId = cardId;
 
             // Reset the input fields in the cloned card
             const inputs = cardClone.querySelectorAll('input');
@@ -146,6 +171,11 @@ MyApp.DocumentModule = (function () {
             cardClone.addEventListener('DOMContentLoaded', function (event) {
                 loadCardData(event.target.closest('.card'));
             });
+
+            // Update the URL with the new card count using the History API
+            const state = {cardCount: cardId};
+            const url = `?cardCount=${cardId}`;
+            history.pushState(state, '', url);
         },
 
         updatePlaceholder: updatePlaceholder,
