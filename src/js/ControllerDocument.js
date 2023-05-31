@@ -9,7 +9,6 @@ MyApp.DocumentModule = (function () {
         const fileInput = event.target;
         const card = fileInput.closest('.card');
         const placeholder = card.querySelector('.placeholder');
-        const docExpInput = card.querySelector('#doc-exp');
 
         if (fileInput.files && fileInput.files[0]) {
             const file = fileInput.files[0];
@@ -25,16 +24,6 @@ MyApp.DocumentModule = (function () {
         } else {
             placeholder.textContent = 'No file chosen';
         }
-
-        const docExpValue = docExpInput.value;
-        const currentDate = new Date().toISOString().split('T')[0];
-        const validDate = currentDate >= '1952-01-01' && currentDate <= '2050-01-01';
-
-        if (docExpValue[0] !== '#' && (!validDate || docExpValue < '1952-01-01' || docExpValue > '2050-01-01')) {
-            docExpInput.style.borderColor = 'red';
-        } else {
-            docExpInput.style.borderColor = '';
-        }
     }
 
     // Function to save card data to LocalStorage
@@ -46,19 +35,6 @@ MyApp.DocumentModule = (function () {
             cardData[input.id] = input.value;
         });
         localStorage.setItem(`card-${cardId}`, JSON.stringify(cardData));
-    }
-
-    // Function to load card data from LocalStorage
-    function loadCardData(card) {
-        const cardId = card.dataset.cardId;
-        const cardData = localStorage.getItem(`card-${cardId}`);
-        if (cardData) {
-            const inputs = card.querySelectorAll('input, select');
-            const parsedData = JSON.parse(cardData);
-            inputs.forEach((input) => {
-                input.value = parsedData[input.id] || '';
-            });
-        }
     }
 
     // Function to delete card data from LocalStorage
@@ -77,6 +53,113 @@ MyApp.DocumentModule = (function () {
         const url = `?cardCount=${remainingDocuments - 1}`;
         history.pushState(state, '', url);
     }
+
+    // Function to validate document fields
+    function validateDocFields(card) {
+        const docNumInput = card.querySelector('#doc-num');
+        const docExpInput = card.querySelector('#doc-exp');
+        const docNumValue = docNumInput.value;
+        const docExpValue = docExpInput.value;
+
+        // Reset border colors to default
+        docNumInput.style.borderColor = '';
+        docExpInput.style.borderColor = '';
+
+        if (docNumValue.trim() === '' || !docNumValue.startsWith('#')) {
+            docNumInput.style.borderColor = 'red';
+            card.style.borderColor = 'red';
+        }
+
+        const docExpDate = new Date(docExpValue);
+        const minDate = new Date('1952-01-01');
+        const maxDate = new Date('2050-01-01');
+
+        if (
+            docExpValue.trim() === '' ||
+            docExpDate < minDate ||
+            docExpDate > maxDate
+        ) {
+            docExpInput.style.borderColor = 'red';
+            card.style.borderColor = 'red';
+        }
+
+        // Check if any input fields have red border color
+        const inputs = card.querySelectorAll('input');
+        let hasInvalidFields = false;
+        inputs.forEach((input) => {
+            if (input.style.borderColor === 'red') {
+                hasInvalidFields = true;
+            }
+        });
+
+        // Check if any previous documents have information
+        const previousCards = document.querySelectorAll('.card');
+        let hasPreviousData = false;
+        previousCards.forEach((previousCard) => {
+            if (previousCard !== card) {
+                const previousDocNumInput = previousCard.querySelector('#doc-num');
+                const previousDocNumValue = previousDocNumInput.value;
+                if (previousDocNumValue.trim() !== '') {
+                    hasPreviousData = true;
+                }
+            }
+        });
+
+        // Change the border color of the HTML code
+        const htmlCode = document.querySelector('.html-code');
+        if (hasInvalidFields || !hasPreviousData) {
+            htmlCode.style.borderColor = 'red';
+        } else {
+            htmlCode.style.borderColor = '';
+        }
+    }
+
+    // Function to load card data from LocalStorage
+    function loadCardData(card) {
+        const cardId = card.dataset.cardId;
+        const cardData = localStorage.getItem(`card-${cardId}`);
+        if (cardData) {
+            const inputs = card.querySelectorAll('input, select');
+            const parsedData = JSON.parse(cardData);
+            inputs.forEach((input) => {
+                input.value = parsedData[input.id] || '';
+            });
+
+            // Validate the document fields after loading card data
+            validateDocFields(card);
+        }
+    }
+
+    // Function to reset card data and borders
+    function resetCardData(card) {
+        // Reset the input fields in the card
+        const inputs = card.querySelectorAll('input');
+        inputs.forEach((input) => {
+            input.value = '';
+            input.style.borderColor = 'black'; // Set border color to black
+        });
+
+        // Reset the select element in the card
+        const select = card.querySelector('select');
+        select.selectedIndex = 0;
+        select.style.borderColor = 'black'; // Set border color to black
+
+        // Reset the placeholder for the image input in the card
+        const fileInput = card.querySelector('.file-input');
+        fileInput.value = '';
+        const placeholder = card.querySelector('.placeholder');
+        placeholder.textContent = 'No file chosen';
+        fileInput.style.borderColor = 'black'; // Set border color to black
+
+        // Uncheck the checkbox in the card
+        const checkbox = card.querySelector('input[name="delete-button"]');
+        checkbox.checked = false;
+
+        // Reset the checkbox label color in the card
+        const checkboxLabel = card.querySelector('.btn-group label');
+        checkboxLabel.classList.remove('active');
+    }
+
 
     // Public methods
     return {
@@ -184,8 +267,22 @@ MyApp.DocumentModule = (function () {
             fileInputClone.addEventListener('change', function () {
                 saveCardData(cardClone);
             });
-            // Load card data from LocalStorage
-            loadCardData(cardClone);
+
+            // Add event listener for validating the document fields
+            const docNumInput = cardClone.querySelector('#doc-num');
+            const docExpInput = cardClone.querySelector('#doc-exp');
+
+            docNumInput.addEventListener('blur', function () {
+                validateDocFields(cardClone);
+            });
+
+            docExpInput.addEventListener('blur', function () {
+                validateDocFields(cardClone);
+            });
+
+            // Reset the data and borders in the cloned card
+            resetCardData(cardClone);
+            validateDocFields(cardClone);
         },
 
         // Function to initialize the application
@@ -218,7 +315,9 @@ MyApp.DocumentModule = (function () {
             const addDocumentButton = document.getElementById('add-document');
             addDocumentButton.addEventListener('click', this.addNewDocument);
         },
-        updatePlaceholder: updatePlaceholder,
+
+        // Function to validate document fields
+        updatePlaceholder: updatePlaceholder
     };
 })();
 
