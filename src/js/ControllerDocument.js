@@ -110,13 +110,17 @@ MyApp.DocumentModule = (function () {
             }
 
             // Show confirmation dialog
-            const confirmDelete = confirm('Are you sure you want to delete all selected documents?');
-            if (confirmDelete) {
-                // Remove the parent card of each selected checkbox
-                checkboxes.forEach((checkbox) => {
-                    const card = checkbox.closest('.card');
-                    deleteCardAndUpdateURL(card, remainingDocuments);
-                });
+            if (checkboxes.length > 1) {
+                const confirmDelete = confirm('Are you sure you want to delete all selected documents?');
+                if (confirmDelete) {
+                    // Remove the parent card of each selected checkbox
+                    checkboxes.forEach((checkbox) => {
+                        const card = checkbox.closest('.card');
+                        deleteCardAndUpdateURL(card, remainingDocuments);
+                    });
+                }
+            } else {
+                alert('You must select at least two documents.');
             }
         },
 
