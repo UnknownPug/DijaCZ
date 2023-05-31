@@ -9,6 +9,7 @@ MyApp.DocumentModule = (function () {
         const fileInput = event.target;
         const card = fileInput.closest('.card');
         const placeholder = card.querySelector('.placeholder');
+        const docExpInput = card.querySelector('#doc-exp');
 
         if (fileInput.files && fileInput.files[0]) {
             const file = fileInput.files[0];
@@ -23,6 +24,16 @@ MyApp.DocumentModule = (function () {
             reader.readAsDataURL(file);
         } else {
             placeholder.textContent = 'No file chosen';
+        }
+
+        const docExpValue = docExpInput.value;
+        const currentDate = new Date().toISOString().split('T')[0];
+        const validDate = currentDate >= '1952-01-01' && currentDate <= '2050-01-01';
+
+        if (docExpValue[0] !== '#' && (!validDate || docExpValue < '1952-01-01' || docExpValue > '2050-01-01')) {
+            docExpInput.style.borderColor = 'red';
+        } else {
+            docExpInput.style.borderColor = '';
         }
     }
 
@@ -66,6 +77,7 @@ MyApp.DocumentModule = (function () {
         const url = `?cardCount=${remainingDocuments - 1}`;
         history.pushState(state, '', url);
     }
+
     // Public methods
     return {
         // Function to delete selected documents
@@ -132,10 +144,8 @@ MyApp.DocumentModule = (function () {
 
             // Get the total number of existing cards
             const cards = document.querySelectorAll('.card');
-            const cardId = String(cards.length + 1);
-
             // Update the dataset attribute with the new card ID
-            cardClone.dataset.cardId = cardId;
+            cardClone.dataset.cardId = String(cards.length + 1);
 
             // Reset the input fields in the cloned card
             const inputs = cardClone.querySelectorAll('input');
@@ -168,21 +178,46 @@ MyApp.DocumentModule = (function () {
             // Save card data to LocalStorage
             saveCardData(cardClone);
 
-            // Add event listeners for file input change event and card data saving/loading
-            fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
-            cardClone.addEventListener('change', function (event) {
-                saveCardData(event.target.closest('.card'));
+            // Add event listeners for file input change event and card data saving
+            const fileInputClone = cardClone.querySelector('.file-input');
+            fileInputClone.addEventListener('change', updatePlaceholder);
+            fileInputClone.addEventListener('change', function () {
+                saveCardData(cardClone);
             });
-            cardClone.addEventListener('DOMContentLoaded', function (event) {
-                loadCardData(event.target.closest('.card'));
-            });
-
-            // Update the URL with the new card count using the History API
-            const state = {cardCount: cardId};
-            const url = `?cardCount=${cardId}`;
-            history.pushState(state, '', url);
+            // Load card data from LocalStorage
+            loadCardData(cardClone);
         },
 
+        // Function to initialize the application
+        init: function () {
+            // Add event listeners for file input change event and card data saving
+            const fileInputs = document.querySelectorAll('.file-input');
+            fileInputs.forEach((fileInput) => {
+                fileInput.addEventListener('change', updatePlaceholder);
+                const card = fileInput.closest('.card');
+                fileInput.addEventListener('change', function () {
+                    saveCardData(card);
+                });
+            });
+
+            // Load card data from LocalStorage
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card) => {
+                loadCardData(card);
+            });
+
+            // Add event listener for delete button click event
+            const deleteButton = document.getElementById('delete-selected');
+            deleteButton.addEventListener('click', this.deleteSelectedDocuments);
+
+            // Add event listener for delete all button click event
+            const deleteAllButton = document.getElementById('delete-all');
+            deleteAllButton.addEventListener('click', this.deleteAllSelectedDocuments);
+
+            // Add event listener for add document button click event
+            const addDocumentButton = document.getElementById('add-document');
+            addDocumentButton.addEventListener('click', this.addNewDocument);
+        },
         updatePlaceholder: updatePlaceholder,
     };
 })();
@@ -244,4 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
             cardGrid.appendChild(card);
         }
     });
+
+    // Initialize the application
+    MyApp.DocumentModule.init();
 });

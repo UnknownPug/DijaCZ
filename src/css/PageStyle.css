@@ -533,6 +533,10 @@
     color: black;
 }
 
+input.invalid {
+    border-color: red;
+}
+
 /* Optional styling */
 .custom-file-input {
     background-color: #f0f0f0;

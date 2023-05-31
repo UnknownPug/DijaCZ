@@ -1,4 +1,6 @@
+// This code initializes a music player on a web page and defines various functions for controlling the player.
 $(function () {
+    // Variables for different elements of the player
     let playerTrack = $("#player-track"),
         albumName = $("#album-name"),
         trackName = $("#track-name"),
@@ -47,15 +49,18 @@ $(function () {
         playNextTrackButton = $("#play-next"),
         currIndex = -1;
 
+    // Function to play or pause the audio
     function playPause() {
         setTimeout(function () {
             if (audio.paused) {
+                // If audio is paused, play it
                 playerTrack.addClass("active");
                 albumArt.addClass("active");
                 checkBuffering();
                 i.attr("class", "fas fa-pause");
-                audio.play();
+                audio.play().then(r => console.log(r)).catch(e => console.log(e));
             } else {
+                // If audio is playing, pause it
                 playerTrack.removeClass("active");
                 albumArt.removeClass("active");
                 clearInterval(buffInterval);
@@ -66,6 +71,7 @@ $(function () {
         }, 300);
     }
 
+    // Function to show the hover time when hovering over the seek bar
     function showHover(event) {
         let seekBarPos = sArea.offset();
         let seekT = event.clientX - seekBarPos.left;
@@ -98,15 +104,18 @@ $(function () {
         insTime.css({left: seekT, "margin-left": "-21px"}).fadeIn(0);
     }
 
+    // Function to hide the hover time when mouseout from the seek bar
     function hideHover() {
         sHover.width(0);
         insTime.text("00:00").css({left: "0px", "margin-left": "0px"}).fadeOut(0);
     }
 
+    // Function to play audio from the clicked position on the seek bar
     function playFromClickedPos() {
         hideHover();
     }
 
+    // Function to update the current time and track progress
     function updateCurrTime() {
         nTime = new Date();
         nTime = nTime.getTime();
@@ -137,10 +146,12 @@ $(function () {
         }
     }
 
+    // Function to check buffering and clear buffer interval
     function checkBuffering() {
         clearInterval(buffInterval);
     }
 
+    // Function to select the next or previous track
     function selectTrack(flag) {
         if (flag === 0 || flag === 1) ++currIndex;
         else --currIndex;
@@ -163,7 +174,7 @@ $(function () {
             nTime = 0;
 
             if (flag !== 0) {
-                audio.play();
+                audio.play().then(r => console.log(r)).catch(e => console.log(e));
                 playerTrack.addClass("active");
                 albumArt.addClass("active");
 
@@ -181,6 +192,7 @@ $(function () {
         }
     }
 
+    // Function to initialize the player and set up event listeners
     function initPlayer() {
         audio = new Audio();
         selectTrack(0);
@@ -199,5 +211,7 @@ $(function () {
             selectTrack(1);
         });
     }
+
+    // Initialize the player when the page is ready
     initPlayer();
 });
