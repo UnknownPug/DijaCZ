@@ -106,7 +106,7 @@ MyApp.DocumentModule = (function () {
         });
 
         // Change the border color of the HTML code
-        const htmlCode = document.querySelector('.html-code');
+        const htmlCode = document.querySelector('.card');
         if (hasInvalidFields || !hasPreviousData) {
             htmlCode.style.borderColor = 'red';
         } else {
