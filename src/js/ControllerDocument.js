@@ -121,6 +121,7 @@ MyApp.DocumentModule = (function () {
                 }
             } else {
                 alert('You must select at least two documents.');
+                MyApp.ButtonModule.disableButton('delete-all');
             }
         },
 
