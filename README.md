@@ -61,7 +61,7 @@ Project web page can be found by [clicking here](https://unknownpug.github.io/Di
 #### JavaScript
 ✅ OOP usage - Prototype inheritance, its use, namespaces
 
-⚠️ Using a JS framework or library - Use and understanding of jQuery, React, Vue ..
+⚠️ Using a JS framework or library - Use and understanding of jQuery, React, Vue
    - Explanation: Using a JavaScript framework or library like jQuery, React, or Vue might not be a good choice for this code because it is relatively simple and does not require the additional complexity, learning curve, performance overhead, dependency management, and increased file size that comes with using a framework or library. It's better to keep the code lean and minimize dependencies.
 
 ✅ Using advanced JS APIs - Use of advanced APIs (File API, Drag & Drop, LocalStorage)
