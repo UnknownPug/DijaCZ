@@ -42,7 +42,8 @@ Project web page can be found by [clicking here](https://unknownpug.github.io/Di
 
 ✅ Media - Audio/Video
 
-✅ Form elements - Wildcard, autofocus
+✅ Form elements - Validation, types, wildcard, autofocus.
+   - Validation is also done in such a way that the user must put a "#" in front of each document number, and select a valid date. If the user did not do one or both of these boxes, our box will have red borders.
 
 ⚠️ Offline application - Using the possibility of the site functioning without Internet connection
    - Explanation: The application cannot be used offline, as there is a need to connect to the network to create new documents and save them. Also, there will be no access to the radio, as there is a need to be connected to the network to play it.
