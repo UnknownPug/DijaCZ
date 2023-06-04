@@ -337,13 +337,22 @@ MyApp.DocumentModule = (function () {
         const deleteSelectedButton = document.getElementById('delete-selected');
         const deleteAllButton = document.getElementById('delete-all');
 
-        // Add click event listener to the "Add new Document" button
+        // Add click event listener to the "Add new Document" button and play the add sound
+        addButton.addEventListener('click', function() {
+            document.getElementById('add-doc-sound').play();
+        });
         addButton.addEventListener('click', MyApp.DocumentModule.addNewDocument);
 
-        // Add click event listener to the "Delete Document" button
+        // Add click event listener to the "Delete Document" button and play the delete sound
+        deleteSelectedButton.addEventListener('click', function() {
+            document.getElementById('delete-selected-sound').play();
+        });
         deleteSelectedButton.addEventListener('click', MyApp.DocumentModule.deleteSelectedDocuments);
 
-        // Add click event listener to the "Delete all documents selected" button
+        // Add click event listener to the "Delete all documents selected" button and play the delete all sound
+        deleteAllButton.addEventListener('click', function() {
+            document.getElementById('delete-all-sound').play();
+        });
         deleteAllButton.addEventListener('click', MyApp.DocumentModule.deleteAllSelectedDocuments);
 
         // Add event listener for file input change event
