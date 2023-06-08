@@ -64,7 +64,7 @@ Project web page can be found by [clicking here](https://unknownpug.github.io/Di
 
 ✅ Using a JS framework or library - jQuery
  
-✅ Using advanced JS APIs - Use of advanced APIs (File API, Drag & Drop, LocalStorage)
+✅ Using advanced JS APIs - Use of advanced API (File API)
 
 ✅ Functional history - Scrolling with back/forward buttons of the browser - if it follows from the functionatilty (History API)
 
