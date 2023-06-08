@@ -54,6 +54,15 @@ MyApp.DocumentModule = (function () {
         history.pushState(state, '', url);
     }
 
+    // Function to validate existing cards
+    function validateExistingCards() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card) => {
+            validateDocFields(card);
+        });
+    }
+
+
     // Function to validate document fields
     function validateDocFields(card) {
         const docNumInput = card.querySelector('#doc-num');
@@ -311,75 +320,84 @@ MyApp.DocumentModule = (function () {
         },
         // Function to validate document fields
         updatePlaceholder: updatePlaceholder,
+
+        // Function to validate existing cards
+        validateExistingCards: validateExistingCards,
+
         // Expose the init function as a public method
         init: this.init,
     };
 })();
 
-    // Button module
-    MyApp.ButtonModule = (function () {
-        // Private variables and functions
+// Call the validateExistingCards function with a delay
+setInterval(() => {
+    MyApp.DocumentModule.validateExistingCards();
+}, 100);
 
-        // Public methods
-        return {
-            // Function to disable a button by id
-            disableButton: function (buttonId) {
-                const button = document.getElementById(buttonId);
-                button.classList.add('disabled');
-            },
-        };
-    })();
+// Button module
+MyApp.ButtonModule = (function () {
+    // Private variables and functions
 
-    // Wrap the JavaScript code in an event listener
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get references to the buttons
-        const addButton = document.getElementById('add-doc');
-        const deleteSelectedButton = document.getElementById('delete-selected');
-        const deleteAllButton = document.getElementById('delete-all');
+    // Public methods
+    return {
+        // Function to disable a button by id
+        disableButton: function (buttonId) {
+            const button = document.getElementById(buttonId);
+            button.classList.add('disabled');
+        },
+    };
+})();
 
-        // Add click event listener to the "Add new Document" button and play the add sound
-        addButton.addEventListener('click', function() {
-            document.getElementById('add-doc-sound').play();
-        });
-        addButton.addEventListener('click', MyApp.DocumentModule.addNewDocument);
+// Wrap the JavaScript code in an event listener
+document.addEventListener('DOMContentLoaded', function () {
+    // Get references to the buttons
+    const addButton = document.getElementById('add-doc');
+    const deleteSelectedButton = document.getElementById('delete-selected');
+    const deleteAllButton = document.getElementById('delete-all');
 
-        // Add click event listener to the "Delete Document" button and play the delete sound
-        deleteSelectedButton.addEventListener('click', function() {
-            document.getElementById('delete-selected-sound').play();
-        });
-        deleteSelectedButton.addEventListener('click', MyApp.DocumentModule.deleteSelectedDocuments);
-
-        // Add click event listener to the "Delete all documents selected" button and play the delete all sound
-        deleteAllButton.addEventListener('click', function() {
-            document.getElementById('delete-all-sound').play();
-        });
-        deleteAllButton.addEventListener('click', MyApp.DocumentModule.deleteAllSelectedDocuments);
-
-        // Add event listener for file input change event
-        const fileInput = document.getElementById('doc-img');
-
-        fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
-
-        // Drag and Drop functionality
-        const cardGrid = document.querySelector('.card-grid');
-
-        cardGrid.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setData('text/plain', event.target.dataset.cardId);
-        });
-
-        cardGrid.addEventListener('dragover', function (event) {
-            event.preventDefault();
-        });
-
-        cardGrid.addEventListener('drop', function (event) {
-            event.preventDefault();
-            const cardId = event.dataTransfer.getData('text/plain');
-            const card = document.querySelector(`[data-card-id="${cardId}"]`);
-            const targetCard = event.target.closest('.card');
-            if (targetCard) {
-                cardGrid.insertBefore(card, targetCard);
-            } else {
-                cardGrid.appendChild(card);
-            }
-        });
+    // Add click event listener to the "Add new Document" button and play the add sound
+    addButton.addEventListener('click', function () {
+        document.getElementById('add-doc-sound').play();
     });
+    addButton.addEventListener('click', MyApp.DocumentModule.addNewDocument);
+
+    // Add click event listener to the "Delete Document" button and play the delete sound
+    deleteSelectedButton.addEventListener('click', function () {
+        document.getElementById('delete-selected-sound').play();
+    });
+    deleteSelectedButton.addEventListener('click', MyApp.DocumentModule.deleteSelectedDocuments);
+
+    // Add click event listener to the "Delete all documents selected" button and play the delete all sound
+    deleteAllButton.addEventListener('click', function () {
+        document.getElementById('delete-all-sound').play();
+    });
+    deleteAllButton.addEventListener('click', MyApp.DocumentModule.deleteAllSelectedDocuments);
+
+    // Add event listener for file input change event
+    const fileInput = document.getElementById('doc-img');
+
+    fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
+
+    // Drag and Drop functionality
+    const cardGrid = document.querySelector('.card-grid');
+
+    cardGrid.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', event.target.dataset.cardId);
+    });
+
+    cardGrid.addEventListener('dragover', function (event) {
+        event.preventDefault();
+    });
+
+    cardGrid.addEventListener('drop', function (event) {
+        event.preventDefault();
+        const cardId = event.dataTransfer.getData('text/plain');
+        const card = document.querySelector(`[data-card-id="${cardId}"]`);
+        const targetCard = event.target.closest('.card');
+        if (targetCard) {
+            cardGrid.insertBefore(card, targetCard);
+        } else {
+            cardGrid.appendChild(card);
+        }
+    });
+});
