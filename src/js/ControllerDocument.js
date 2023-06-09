@@ -26,32 +26,54 @@ MyApp.DocumentModule = (function () {
         }
     }
 
-    // Function to save card data to LocalStorage
-    function saveCardData(card) {
-        const cardId = card.dataset.cardId;
-        const inputs = card.querySelectorAll('input, select');
-        const cardData = {};
-        inputs.forEach((input) => {
-            cardData[input.id] = input.value;
-        });
-        localStorage.setItem(`card-${cardId}`, JSON.stringify(cardData));
-    }
-
-    // Function to delete card data from LocalStorage
-    function deleteCardData(card) {
-        const cardId = card.dataset.cardId;
-        localStorage.removeItem(`card-${cardId}`);
-    }
-
     // Function to delete a card and update the URL
     function deleteCardAndUpdateURL(card, remainingDocuments) {
-        deleteCardData(card); // Delete card data from LocalStorage
         card.remove();
 
-        // Update the URL with the new card count using the History API
+        // Update the state with the new card count using the History API
         const state = {cardCount: remainingDocuments - 1};
-        const url = `?cardCount=${remainingDocuments - 1}`;
-        history.pushState(state, '', url);
+        history.pushState(state, '');
+
+        // Decrement the remainingDocuments variable
+        remainingDocuments--;
+    }
+
+    function handleStateChange(event) {
+        const state = event.state;
+        if (state && state.cardCount !== undefined) {
+            const cardCount = state.cardCount;
+
+            const cardGrid = document.querySelector('.card-grid');
+            const cards = cardGrid.querySelectorAll('.card');
+
+            const existingCardCount = cards.length;
+            const remainingDocuments = cardCount - existingCardCount;
+
+            // Remove excess cards if the stored card count is less than the current card count
+            if (remainingDocuments < 0) {
+                for (let i = existingCardCount - 1; i >= cardCount; i--) {
+                    cards[i].remove();
+                }
+            }
+
+            // Add new cards if the stored card count is greater than the current card count
+            if (remainingDocuments > 0) {
+                const cardTemplate = document.querySelector('.card');
+                for (let i = 0; i < remainingDocuments; i++) {
+                    const cardClone = cardTemplate.cloneNode(true);
+                    cardGrid.appendChild(cardClone);
+                }
+            }
+        } else {
+            // If there is no state or cardCount in the state, remove all cards
+            const cardGrid = document.querySelector('.card-grid');
+            const cards = cardGrid.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                if (index !== 0) {
+                    card.remove();
+                }
+            });
+        }
     }
 
     // Function to validate existing cards
@@ -123,22 +145,6 @@ MyApp.DocumentModule = (function () {
         }
     }
 
-    // Function to load card data from LocalStorage
-    function loadCardData(card) {
-        const cardId = card.dataset.cardId;
-        const cardData = localStorage.getItem(`card-${cardId}`);
-        if (cardData) {
-            const inputs = card.querySelectorAll('input, select');
-            const parsedData = JSON.parse(cardData);
-            inputs.forEach((input) => {
-                input.value = parsedData[input.id] || '';
-            });
-
-            // Validate the document fields after loading card data
-            validateDocFields(card);
-        }
-    }
-
     // Function to reset card data and borders
     function resetCardData(card) {
         // Reset the input fields in the card
@@ -168,7 +174,6 @@ MyApp.DocumentModule = (function () {
         const checkboxLabel = card.querySelector('.btn-group label');
         checkboxLabel.classList.remove('active');
     }
-
 
     // Public methods
     return {
@@ -267,9 +272,6 @@ MyApp.DocumentModule = (function () {
             const cardGrid = document.querySelector('.card-grid');
             cardGrid.appendChild(cardClone);
 
-            // Save card data to LocalStorage
-            saveCardData(cardClone);
-
             // Update the URL with the new card count using the History API
             const remainingDocuments = cards.length + 1;
             const state = {cardCount: remainingDocuments};
@@ -279,9 +281,6 @@ MyApp.DocumentModule = (function () {
             // Add event listeners for file input change event and card data saving
             const fileInputClone = cardClone.querySelector('.file-input');
             fileInputClone.addEventListener('change', updatePlaceholder);
-            fileInputClone.addEventListener('change', function () {
-                saveCardData(cardClone);
-            });
 
             // Add event listener for validating the document fields
             const docNumInput = cardClone.querySelector('#doc-num');
@@ -298,8 +297,6 @@ MyApp.DocumentModule = (function () {
             // Reset the data and borders in the cloned card
             resetCardData(cardClone);
             validateDocFields(cardClone);
-            // Load card data from LocalStorage
-            loadCardData(cardClone);
 
             // Validate the document fields in the cloned card
             validateDocFields(cardClone);
@@ -323,6 +320,8 @@ MyApp.DocumentModule = (function () {
 
         // Function to validate existing cards
         validateExistingCards: validateExistingCards,
+        // Function to handle the state change
+        handleStateChange: handleStateChange,
 
         // Expose the init function as a public method
         init: this.init,
@@ -333,6 +332,11 @@ MyApp.DocumentModule = (function () {
 setInterval(() => {
     MyApp.DocumentModule.validateExistingCards();
 }, 100);
+
+// Add the event listener for the popstate event outside the module
+window.addEventListener('popstate', function (event) {
+    MyApp.DocumentModule.handleStateChange(event);
+});
 
 // Button module
 MyApp.ButtonModule = (function () {
@@ -377,27 +381,4 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('doc-img');
 
     fileInput.addEventListener('change', MyApp.DocumentModule.updatePlaceholder);
-
-    // Drag and Drop functionality
-    const cardGrid = document.querySelector('.card-grid');
-
-    cardGrid.addEventListener('dragstart', function (event) {
-        event.dataTransfer.setData('text/plain', event.target.dataset.cardId);
-    });
-
-    cardGrid.addEventListener('dragover', function (event) {
-        event.preventDefault();
-    });
-
-    cardGrid.addEventListener('drop', function (event) {
-        event.preventDefault();
-        const cardId = event.dataTransfer.getData('text/plain');
-        const card = document.querySelector(`[data-card-id="${cardId}"]`);
-        const targetCard = event.target.closest('.card');
-        if (targetCard) {
-            cardGrid.insertBefore(card, targetCard);
-        } else {
-            cardGrid.appendChild(card);
-        }
-    });
 });
