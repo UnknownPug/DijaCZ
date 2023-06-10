@@ -61,7 +61,12 @@ MyApp.DocumentModule = (function () {
                 const cardTemplate = document.querySelector('.card');
                 for (let i = 0; i < remainingDocuments; i++) {
                     const cardClone = cardTemplate.cloneNode(true);
+                    resetCardValues(cardClone); // Reset cloned card values
                     cardGrid.appendChild(cardClone);
+
+                    // Reattach event listener for file input change event and updatePlaceholder
+                    const fileInputClone = cardClone.querySelector('.file-input');
+                    fileInputClone.addEventListener('change', updatePlaceholder);
                 }
             }
         } else {
@@ -74,6 +79,16 @@ MyApp.DocumentModule = (function () {
                 }
             });
         }
+    }
+
+    function resetCardValues(card) {
+        // Reset the values of the card here
+        const inputs = card.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.value = '';
+        });
+        const placeholder = card.querySelector('.placeholder');
+        placeholder.textContent = 'No file chosen';
     }
 
     // Function to validate existing cards
