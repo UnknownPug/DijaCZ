@@ -95,5 +95,3 @@ The website is a way of storing documents. The user can browse through the websi
 🔘 The comments to the description of the document manipulation can be found in the code itself by [clicking here](https://github.com/UnknownPug/DijaCZ/blob/main/src/js/ControllerDocument.js)
 
 🔘 The comments to the description of the audio script can be found in the code itself by [clicking here](https://github.com/UnknownPug/DijaCZ/blob/main/src/js/AudioScript.js)
-
-## Thank you for your attention 🤝
